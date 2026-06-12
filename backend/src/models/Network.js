@@ -1,11 +1,13 @@
 class Network {
     constructor() {
         this.graph = {};
+        this.routers = {};
     }
 
     addRouter(routerId) {
         if (!this.graph[routerId]) {
             this.graph[routerId] = {};
+            this.routers[routerId] = true; // UP
         }
     }
 
@@ -18,13 +20,58 @@ class Network {
     }
 
     removeLink(source, destination) {
-        delete this.graph[source][destination];
-        delete this.graph[destination][source];
+        if (this.graph[source]) {
+            delete this.graph[source][destination];
+        }
+
+        if (this.graph[destination]) {
+            delete this.graph[destination][source];
+        }
     }
 
     updateLinkCost(source, destination, newCost) {
-        this.graph[source][destination] = newCost;
-        this.graph[destination][source] = newCost;
+        if (
+            this.graph[source] &&
+            this.graph[destination]
+        ) {
+            this.graph[source][destination] = newCost;
+            this.graph[destination][source] = newCost;
+        }
+    }
+
+    bringRouterDown(routerId) {
+        if (this.routers[routerId] !== undefined) {
+            this.routers[routerId] = false;
+        }
+    }
+
+    bringRouterUp(routerId) {
+        if (this.routers[routerId] !== undefined) {
+            this.routers[routerId] = true;
+        }
+    }
+
+    getActiveTopology() {
+        const activeGraph = {};
+
+        for (const router in this.graph) {
+
+            if (!this.routers[router]) {
+                continue;
+            }
+
+            activeGraph[router] = {};
+
+            for (const neighbor in this.graph[router]) {
+
+                if (this.routers[neighbor]) {
+                    activeGraph[router][neighbor] =
+                        this.graph[router][neighbor];
+                }
+            }
+        }
+
+        return activeGraph;
     }
 
     getTopology() {
