@@ -77,6 +77,18 @@ class Network {
     getTopology() {
         return this.graph;
     }
+    routerExists(routerId) {
+    return this.routers[routerId] !== undefined;
+}
+
+linkExists(source, destination) {
+
+    return !!(
+        this.graph[source] &&
+        this.graph[source][destination] !== undefined
+    );
+
+}
 }
 
 module.exports = Network;
