@@ -9,7 +9,7 @@ const {
     validateRouterId,
     validateCost,
     validateLink
-} = require("../utils/validators");
+} = require("../utils/validator");
 
 router.post(
     "/router",
@@ -206,17 +206,19 @@ router.post(
 
 router.get("/topology", (req, res) => {
 
-    res.json(
-        ospf.getTopology()
-    );
+    res.json({
+        success: true,
+        state: ospf.getNetworkState()
+    });
 
 });
 
 router.get("/routing-tables", (req, res) => {
 
-    res.json(
-        ospf.getRoutingTables()
-    );
+    res.json({
+        success: true,
+        state: ospf.getNetworkState()
+    });
 
 });
 

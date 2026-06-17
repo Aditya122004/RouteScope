@@ -1,5 +1,5 @@
 const AppError =
-    require("../errors/AppError");
+    require("../errors/appError");
 
 function validateRouterId(routerId) {
 

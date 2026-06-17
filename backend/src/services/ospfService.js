@@ -4,7 +4,7 @@ const {
     generateAllRoutingTables
 } = require("./routingTable");
 const AppError =
-    require("../errors/AppError");
+    require("../errors/appError");
 
 class OSPFService {
 
