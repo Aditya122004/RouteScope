@@ -241,6 +241,25 @@ ensureLinkExists(
     }
 
 }
+clearTopology() {
+
+    this.network.clear();
+
+}
+loadTopology(
+    graph,
+    routerStatuses
+) {
+
+    this.network.setTopology(
+        graph,
+        routerStatuses
+    );
+
+}
+getFullState() {
+    return this.network.getFullState();
+}
 }
 
 module.exports = OSPFService;

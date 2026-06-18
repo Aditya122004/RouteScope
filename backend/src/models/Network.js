@@ -3,6 +3,15 @@ class Network {
         this.graph = {};
         this.routers = {};
     }
+    setTopology(
+    graph,
+    routerStatuses
+) {
+
+    this.graph = graph;
+    this.routers = routerStatuses;
+
+}
 
     addRouter(routerId) {
         if (!this.graph[routerId]) {
@@ -87,6 +96,20 @@ linkExists(source, destination) {
         this.graph[source] &&
         this.graph[source][destination] !== undefined
     );
+
+}
+clear() {
+
+    this.graph = {};
+    this.routers = {};
+
+}
+getFullState() {
+
+    return {
+        graph: this.graph,
+        routerStatuses: this.routers
+    };
 
 }
 }

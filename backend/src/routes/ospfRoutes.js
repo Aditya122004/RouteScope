@@ -221,5 +221,23 @@ router.get("/routing-tables", (req, res) => {
     });
 
 });
+router.delete(
+    "/clear",
+    catchAsync(
+        async (req, res) => {
+
+            ospf.clearTopology();
+
+            res.json({
+                success: true,
+                message:
+                    "Topology cleared",
+                state:
+                    ospf.getNetworkState()
+            });
+
+        }
+    )
+);
 
 module.exports=router;
