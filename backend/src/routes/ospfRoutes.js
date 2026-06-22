@@ -221,7 +221,7 @@ router.get("/routing-tables", (req, res) => {
     });
 
 });
-router.delete(
+router.post(
     "/clear",
     catchAsync(
         async (req, res) => {

@@ -3,14 +3,22 @@ import ControlBar from "./components/ControlBar";
 import NetworkCanvas from "./components/NetworkCanvas";
 import RoutingTablePanel from "./components/RoutingTablePanel";
 import StatusBar from "./components/StatusBar";
+import AuthPage from "./components/AuthPage";
 import { ospfApi } from "./api/ospf";
 import { useNetworkStore } from "./store/networkStore";
+import { useAuthStore } from "./store/authStore";
 
 export default function App() {
   const { applyState, setInitialLoading, setInitialError, initialLoading, initialError } =
     useNetworkStore();
+  const { token, user, guest, setGuest } = useAuthStore();
+
+  // Fetch topology whenever we enter the app (logged in or guest)
+  const isInApp = !!token || guest;
 
   useEffect(() => {
+    if (!isInApp) return;
+    setInitialLoading(true);
     ospfApi
       .getTopology()
       .then((state) => {
@@ -20,7 +28,12 @@ export default function App() {
       .catch((err) => {
         setInitialError(err.message || "Failed to reach backend");
       });
-  }, []);
+  }, [isInApp]);
+
+  // Not yet decided — show auth page
+  if (!isInApp) {
+    return <AuthPage onContinueAsGuest={() => setGuest(true)} />;
+  }
 
   if (initialLoading) {
     return (

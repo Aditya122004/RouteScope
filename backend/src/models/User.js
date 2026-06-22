@@ -31,14 +31,14 @@ const userSchema =
 
 userSchema.pre(
     "save",
-    async function(next) {
+    async function() {
 
         if (
             !this.isModified(
                 "password"
             )
         ) {
-            return next();
+            return;
         }
 
         this.password =
@@ -46,8 +46,6 @@ userSchema.pre(
                 this.password,
                 10
             );
-
-        next();
 
     }
 );

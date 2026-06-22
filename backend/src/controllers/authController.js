@@ -83,7 +83,8 @@ async (req, res) => {
 
     res.json({
         success: true,
-        token
+        token,
+        username: user.username
     });
 
 };

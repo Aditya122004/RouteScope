@@ -17,6 +17,9 @@ export const ospfApi = {
   getTopology: () =>
     request("/topology", "GET"),
 
+  clearTopology: () =>
+    request("/clear", "POST"),
+
   addRouter: (routerId) =>
     request("/router", "POST", { routerId }),
 
